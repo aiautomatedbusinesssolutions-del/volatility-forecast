@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+
+# Environment variables (API keys)
+.env
+.env.local
+.env*.local
+
+# Next.js build output
+.next/
+
+# Production builds
+build/
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
