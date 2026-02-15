@@ -6,10 +6,12 @@ import TickerSearch from "@/components/TickerSearch/TickerSearch";
 import MarketPulse from "@/components/MarketPulse/MarketPulse";
 import RiskAlerts from "@/components/RiskAlerts/RiskAlerts";
 import VolatilityExplainer from "@/components/Explainers/VolatilityExplainer";
+import { hasApiKeys } from "@/services/apiClient";
 import type { TickerResult } from "@/services/polygonService";
 
 export default function Dashboard() {
   const [watchlist, setWatchlist] = useState<string[]>([]);
+  const keysPresent = hasApiKeys();
 
   const handleTickerSelect = (ticker: TickerResult) => {
     setWatchlist((prev) => {
@@ -21,6 +23,20 @@ export default function Dashboard() {
   return (
     <ErrorBoundary>
       <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-10">
+        {!keysPresent && (
+          <div className="mb-6 rounded-xl border border-amber-400/30 bg-amber-900/20 px-5 py-4 text-sm text-amber-300">
+            <strong>API keys not detected.</strong> Set{" "}
+            <code className="rounded bg-slate-800 px-1.5 py-0.5 text-xs">
+              NEXT_PUBLIC_POLYGON_API_KEY
+            </code>{" "}
+            and{" "}
+            <code className="rounded bg-slate-800 px-1.5 py-0.5 text-xs">
+              NEXT_PUBLIC_ALPHA_VANTAGE_API_KEY
+            </code>{" "}
+            in your Netlify environment variables, then redeploy.
+          </div>
+        )}
+
         {/* Header */}
         <header className="mb-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <h1 className="text-2xl font-bold text-slate-100 sm:text-3xl">
